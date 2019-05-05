@@ -1,0 +1,26 @@
+version: '2'
+services:
+  webapp:
+    image: php:7.3-apache
+    container_name: webappserver
+    build:
+      context: /home/kaustubh/docker_workshop/
+      dockerfile: Dockerfile
+    depends_on: 
+      - db
+    volumes:
+      - /home/kaustubh/docker_workshop/public-html:/var/www/html
+    ports:
+      - 8080:80
+  db:
+    image: mysql:8.0
+    container_name: dbserver
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABSE: mydb
+      MYSQL_USER: kp
+      MYSQL_PASSWORD: mysql
+    ports:
+      - 8085:3306
